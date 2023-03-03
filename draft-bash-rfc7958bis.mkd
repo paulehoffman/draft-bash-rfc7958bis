@@ -206,7 +206,7 @@ keydigest = element KeyDigest {
     element DigestType {
             xsd:nonNegativeInteger { maxInclusive = "255" } },
     element Digest { xsd:hexBinary }
-
+}
                            Figure 1
 ~~~
 
@@ -327,7 +327,7 @@ Figure 2 describes two fictitious trust anchors for the root zone.
     </KeyDigest>
 </TrustAnchor>
 
-                           Figure 1
+                           Figure 2
 ~~~
 
 ## Certificates {#certs}

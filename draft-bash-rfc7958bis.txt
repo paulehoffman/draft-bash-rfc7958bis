@@ -248,7 +248,7 @@ Internet-Draft     Root Zone Trust Anchor Publication         March 2023
        element DigestType {
                xsd:nonNegativeInteger { maxInclusive = "255" } },
        element Digest { xsd:hexBinary }
-
+   }
                               Figure 1
 
 2.1.2.  XML Semantics
@@ -385,7 +385,7 @@ Internet-Draft     Root Zone Trust Anchor Publication         March 2023
        </KeyDigest>
    </TrustAnchor>
 
-                              Figure 1
+                              Figure 2
 
 
 
