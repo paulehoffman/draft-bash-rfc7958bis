@@ -65,18 +65,7 @@ informative:
     target: https://www.oasis-open.org/committees/relax-ng/compact-20021121.html
     date: 2002
 
-
 --- abstract
-
-The root zone of the Domain Name System (DNS) has been
-cryptographically signed using DNS Security Extensions (DNSSEC).
-
-In order to obtain secure answers from the root zone of the DNS using
-DNSSEC, a client must configure a suitable trust anchor.  This
-document describes the format and publication mechanisms IANA has
-used to distribute the DNSSEC trust anchors.
-
---- middle
 
 <!-- Notes for co-authors
 
@@ -91,7 +80,20 @@ key ceremony records, but it could also happen if IANA publishes the keys in the
 
 PH: Appendix A needs to be filled in with the actual steps that happened for KSK 2017.
 
+PH: Maybe get rid of the two figure numbers because they aren't used everywhere and they
+are not referenced except for right above the figures.
+
 -->
+
+The root zone of the Domain Name System (DNS) has been
+cryptographically signed using DNS Security Extensions (DNSSEC).
+
+In order to obtain secure answers from the root zone of the DNS using
+DNSSEC, a client must configure a suitable trust anchor.  This
+document describes the format and publication mechanisms IANA has
+used to distribute the DNSSEC trust anchors.
+
+--- middle
 
 # Introduction
 
