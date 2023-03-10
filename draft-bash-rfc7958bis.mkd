@@ -83,6 +83,9 @@ PH: Appendix A needs to be filled in with the actual steps that happened for KSK
 PH: Maybe get rid of the two figure numbers because they aren't used everywhere and they
 are not referenced except for right above the figures.
 
+PH: Make the wording the present active tense throughout.
+For example, "is cryptographically signed" instead of "has been cryptographically signed".
+
 -->
 
 The root zone of the Domain Name System (DNS) has been
