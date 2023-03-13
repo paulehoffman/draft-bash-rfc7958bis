@@ -30,7 +30,7 @@ author:
    ins: G. Bailey
    name: Guillaume Bailey
    org: Independent
-   email: paul.hoffman@icann.org
+   email: guillaumebailey@outlook.com
 -
    ins: P. Hoffman
    name: Paul Hoffman
