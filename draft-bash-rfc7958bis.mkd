@@ -54,7 +54,7 @@ informative:
     title: DNSSEC Practice Statement for the Root Zone KSK Operator
     author:
     - org: Root Zone KSK Operator Policy Management Authority
-    target: https://www.iana.org/dnssec/procedures/ksk-operator/ksk-dps-20201104.html
+    target: https://www.iana.org/dnssec/procedures
     date: 2020
   RELAX-NG:
     title: RELAX NG Compact Syntax
@@ -112,7 +112,7 @@ anchor is outside the DNSSEC protocol, but having one or more trust
 anchors is required for the DNSSEC protocol to work.
 
 The publication of trust anchors for the root zone of the DNS is an
-IANA function performed by ICANN.  A detailed description of
+IANA function performed by ICANN, through its affiliate Public Technical Identifiers (PTI).  A detailed description of
 corresponding key management practices can be found in {{DPS}}, which
 can be retrieved from the IANA Repository at
 &lt;https://www.iana.org/dnssec/&gt;.
@@ -164,17 +164,11 @@ This is in the seventh paragraph of {{xml_semantics}}.
 
 # IANA DNSSEC Root Zone Trust Anchor Formats and Semantics {#ta_formats}
 
-IANA publishes trust anchors for the root zone in three formats:
+IANA publishes trust anchors for the root zone in one format:
 
 - an XML document that contains the hashes of the DNSKEY records
 
-- certificates in PKIX format {{RFC5280}} that contain DS records and
-the full public key of DNSKEY records
-
-- Certificate Signing Requests (CSRs) in PKCS #10 format {{RFC2986}}
-that contain DS records and the full public key of DNSKEY records
-
-These formats and the semantics associated with each are described in
+This format and the semantics associated are described in
 the rest of this section.
 
 ## Hashes in XML {#hashes}
@@ -239,11 +233,7 @@ Each KeyDigest element represents the digest of a DNSKEY record in
 the zone defined in the Zone element.
 
 The id attribute in the KeyDigest element is an opaque string that
-identifies the hash.  Its value is used in the file names and URI of
-the other trust anchor formats.  This is described in {{retrieving}}.
-For example, if the value of the id attribute in the KeyDigest
-element is "Kjqmt7v", the URI for the CSR that is associated with
-this hash will be &lt;https://data.iana.org/root-anchors/Kjqmt7v.csr&gt;.
+identifies the hash.
 Note that the id element in the KeyDigest element is different than
 the id element in the TrustAnchor element described above.
 
@@ -335,70 +325,6 @@ Figure 2 describes two fictitious trust anchors for the root zone.
                            Figure 2
 ~~~
 
-## Certificates {#certs}
-
-Each public key that can be used as a trust anchor is represented as
-a certificate in PKIX format.  Each certificate is signed by the
-ICANN certificate authority.  The SubjectPublicKeyInfo in the
-certificate represents the public key of the Key Signing Key (KSK).
-The Subject field has the following attributes:
-
-O:
-: the string "ICANN".
-
-OU:
-: the string "IANA".
-
-CN:
-: the string "Root Zone KSK" followed by the time and date of key
-generation in the format specified in {{RFC3339}}.  For example, a
-CN might be "Root Zone KSK 2010-06-16T21:19:24+00:00".
-
-resourceRecord:
-: a string in the presentation format of the DS resource record for the DNSSEC public key.
-
-The "resourceRecord" attribute in the Subject is defined as follows:
-
-~~~
-ResourceRecord
-  { iso(1) identified-organization(3) dod(6) internet(1) security(5)
-    mechanisms(5) pkix(7) id-mod(0) id-mod-dns-resource-record(70) }
-
-DEFINITIONS IMPLICIT TAGS ::=
-
-BEGIN
-
--- EXPORTS ALL --
-
-IMPORTS
-
-caseIgnoreMatch FROM SelectedAttributeTypes
-    { joint-iso-itu-t ds(5) module(1) selectedAttributeTypes(5) 4 }
-
-;
-
-iana OBJECT IDENTIFIER ::= { iso(1) identified-organization(3)
-    dod(6) internet(1) private(4) enterprise(1) 1000 }
-
-iana-dns OBJECT IDENTIFIER ::= { iana 53 }
-
-resourceRecord ATTRIBUTE ::= {
-    WITH SYNTAX IA5String
-    EQUALITY MATCHING RULE caseIgnoreMatch
-    ID iana-dns
-}
-
-END
-
-~~~
-
-## Certificate Signing Requests
-
-Each public key that can be used as a trust anchor is represented as
-a CSR in PKCS #10 format.  The SubjectPublicKeyInfo and Subject field
-are the same as for certificates (see {{certs}} above).
-
-
 # Root Zone Trust Anchor Retrieval {#retrieving}
 
 ## Retrieving Trust Anchors with HTTPS and HTTP
@@ -411,16 +337,6 @@ HTTPS cannot be used, replace the "https:" scheme with "http:".
 The URL for retrieving the set of hashes described in {{hashes}} is
 &lt;https://data.iana.org/root-anchors/root-anchors.xml&gt;.
 
-The URL for retrieving the PKIX certificate described in {{xml_syntax}}
-is &lt;https://data.iana.org/root-anchors/KEYDIGEST-ID.crt&gt;, with the
-string "KEYDIGEST-ID" replacing the "id" attribute from the KeyDigest
-element from the XML file, as described in {{xml_semantics}}.
-
-The URL for retrieving the CSR described in {{certs}} is
-&lt;https://data.iana.org/root-anchors/KEYDIGEST-ID.csr&gt;, with the
-string "KEYDIGEST-ID" replacing the "id" attribute from the KeyDigest
-element from the XML file, as described in {{xml_semantics}}.
-
 # Accepting DNSSEC Trust Anchors {#trusting_anchors}
 
 A validator operator can choose whether or not to accept the trust
@@ -432,9 +348,7 @@ anchor data.
 
 It is important to note that the ICANN CA is not a DNSSEC trust
 anchor.  Instead, it is an optional mechanism for verifying the
-content and origin of the XML and certificate trust anchors.  It is
-also important to note that the ICANN CA cannot be used to verify the
-origin of the trust anchor in the CSR format.
+content and origin of the XML and certificate trust anchors.
 
 The content and origin of the XML file can be verified using a
 digital signature on the file.  IANA provides a detached
@@ -442,13 +356,6 @@ Cryptographic Message Syntax (CMS) {{RFC5652}} signature that chains to
 the ICANN CA with the XML file.  The URL for a detached CMS signature
 for the XML file is
 &lt;https://data.iana.org/root-anchors/root-anchors.p7s&gt;.
-
-\[ Need to check with IANA on the paragraph below \]
-
-(IANA also provided a detached OpenPGP {{RFC4880}} signature as a
-second parallel verification mechanism for the first trust anchor
-publication but has indicated that it will not use this parallel
-mechanism in the future.)
 
 Another method IANA uses to help validator operators verify the
 content and origin of trust anchors they receive is to use the
@@ -458,12 +365,6 @@ that is, one that is a WebTrust-accredited CA.  If a system
 retrieving the trust anchors trusts the CA that IANA uses for the
 "data.iana.org" web server, HTTPS SHOULD be used instead of HTTP in
 order to have assurance of data origin.
-
-# IANA Considerations
-
-This document defines id-mod-dns-resource-record, value 70 (see
-{{certs}}), in the "SMI Security for PKIX Module Identifier"
-registry.
 
 # Security Considerations
 
