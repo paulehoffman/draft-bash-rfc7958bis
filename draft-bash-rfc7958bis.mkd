@@ -112,7 +112,7 @@ anchor is outside the DNSSEC protocol, but having one or more trust
 anchors is required for the DNSSEC protocol to work.
 
 The publication of trust anchors for the root zone of the DNS is an
-IANA function performed by ICANN, through its affiliate Public Technical Identifiers (PTI).  A detailed description of
+IANA function. A detailed description of
 corresponding key management practices can be found in {{DPS}}, which
 can be retrieved from the IANA Repository at
 &lt;https://www.iana.org/dnssec/&gt;.
@@ -164,9 +164,7 @@ This is in the seventh paragraph of {{xml_semantics}}.
 
 # IANA DNSSEC Root Zone Trust Anchor Formats and Semantics {#ta_formats}
 
-IANA publishes trust anchors for the root zone in one format:
-
-- an XML document that contains the hashes of the DNSKEY records
+IANA publishes trust anchors for the root zone as an XML document that contains the hashes of the DNSKEY records.
 
 This format and the semantics associated are described in
 the rest of this section.
