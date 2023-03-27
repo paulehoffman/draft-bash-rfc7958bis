@@ -112,7 +112,7 @@ anchor is outside the DNSSEC protocol, but having one or more trust
 anchors is required for the DNSSEC protocol to work.
 
 The publication of trust anchors for the root zone of the DNS is an
-IANA function. A detailed description of
+IANA function performed by ICANN, through its affiliate Public Technical Identifiers (PTI). A detailed description of
 corresponding key management practices can be found in {{DPS}}, which
 can be retrieved from the IANA Repository at
 &lt;https://www.iana.org/dnssec/&gt;.
