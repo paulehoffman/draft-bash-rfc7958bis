@@ -200,7 +200,7 @@ keydigest = element KeyDigest {
     element DigestType {
             xsd:nonNegativeInteger { maxInclusive = "255" } },
     element Digest { xsd:hexBinary },
-    element PublicKey { xsd:hexBinary }?
+    element PublicKey { xsd:base64Binary }?
 }
                            Figure 1
 ~~~
