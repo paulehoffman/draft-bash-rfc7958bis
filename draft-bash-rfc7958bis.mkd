@@ -166,11 +166,16 @@ IANA publishes trust anchors for the root zone as an XML document that contains 
 This format and the semantics associated are described in
 the rest of this section.
 
-## Hashes in XML {#hashes}
+## Hashes and Keys in XML {#hashes}
 
 The XML document contains a set of hashes for the DNSKEY records that
 can be used to validate the root zone.  The hashes are consistent
-with the defined presentation format of DS resource .
+with the defined presentation format of DS resource.
+
+The XML document also can contain the keys from the DNSKEY records.
+The keys are consistent with the defined presentation format of DNSKEY resource.
+
+Note that the hashes are mandatory in the syntax, but the keys are optional.
 
 ### XML Syntax {#xml_syntax}
 
