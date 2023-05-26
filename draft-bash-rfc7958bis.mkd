@@ -169,6 +169,7 @@ the rest of this section.
 
 Note that the XML document can have XML comments.
 For example, IANA might use these comments to add pointers to important information on the IANA web site.
+XML comments are only used as human-readable commentary, not extensions to the grammar.
 
 ## Hashes in XML {#hashes}
 
@@ -308,7 +309,8 @@ Figure 2 describes two fictitious trust anchors for the root zone.
     <Zone>.</Zone>
     <KeyDigest id="42"
                validFrom="2010-07-01T00:00:00-00:00"
-               validUntil="2010-08-01T00:00:00-00:00">
+               validUntil="2010-08-01T00:00:00-00:00"> <!-- This key
+    is no longer valid, since validUntil is in the past -->
         <KeyTag>34291</KeyTag>
         <Algorithm>5</Algorithm>
         <DigestType>1</DigestType>
