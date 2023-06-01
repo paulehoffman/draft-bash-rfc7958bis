@@ -73,6 +73,11 @@ PH: There was discussion in the algorithm rollover design team about adding comm
 We know that developers read the file, and the comments could be helpful to them to understand things like
 where they can find out more information about the future rollover.
 
+PH: I would like to re-open the discussion of whether IANA should be publishing the PKIX and CSR files,
+and when. Duane Wessels has charts that show that some resolvers are using the future trust anchor
+keys before they are published in the root zone. That could happen if they pull the keys from the
+key ceremony records, but it could also happen if IANA publishes the keys in the PKIX and CSR files.
+
 PH: Appendix A needs to be filled in with the actual steps that happened for KSK 2017.
 
 PH: Maybe get rid of the two figure numbers because they aren't used everywhere and they
@@ -159,6 +164,8 @@ This is in the seventh paragraph of {{xml_semantics}}.
 
 - The reference to the DNSSEC Practice Statement {{DPS}} was updated.
 
+- Say explicitly that the XML documents might have XML comments in them.
+
 # IANA DNSSEC Root Zone Trust Anchor Formats and Semantics {#ta_formats}
 
 IANA publishes trust anchors for the root zone as an XML document that contains the hashes of the DNSKEY records.
@@ -167,6 +174,10 @@ This format and the semantics associated are described in
 the rest of this section.
 
 ## Hashes and Keys in XML {#hashes}
+
+Note that the XML document can have XML comments.
+For example, IANA might use these comments to add pointers to important information on the IANA web site.
+XML comments are only used as human-readable commentary, not extensions to the grammar.
 
 The XML document contains a set of hashes for the DNSKEY records that
 can be used to validate the root zone.  The hashes are consistent
@@ -333,13 +344,16 @@ Figure 2 describes two fictitious trust anchors for the root zone.
 ~~~
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- Note that these trust anchors are fictitious. -->
+
 <TrustAnchor
     id="AD42165F-B099-4778-8F42-D34A1D41FD93"
     source="http://data.iana.org/root-anchors/root-anchors.xml">
     <Zone>.</Zone>
     <KeyDigest id="42"
                validFrom="2010-07-01T00:00:00-00:00"
-               validUntil="2010-08-01T00:00:00-00:00">
+               validUntil="2010-08-01T00:00:00-00:00"> <!-- This key
+    is no longer valid, since validUntil is in the past -->
         <KeyTag>34291</KeyTag>
         <Algorithm>5</Algorithm>
         <DigestType>1</DigestType>
