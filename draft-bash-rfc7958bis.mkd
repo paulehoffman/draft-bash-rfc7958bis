@@ -69,6 +69,10 @@ informative:
 
 <!-- Notes for co-authors
 
+PH: There was discussion in the algorithm rollover design team about adding comments to the XML file.
+We know that developers read the file, and the comments could be helpful to them to understand things like
+where they can find out more information about the future rollover.
+
 PH: I would like to re-open the discussion of whether IANA should be publishing the PKIX and CSR files,
 and when. Duane Wessels has charts that show that some resolvers are using the future trust anchor
 keys before they are published in the root zone. That could happen if they pull the keys from the
@@ -156,6 +160,8 @@ This version of the document includes the following changes:
 - There is a signficant technical change from erratum 5932 &lt;https://www.rfc-editor.org/errata/eid5932&gt;.
 This is in the seventh paragraph of {{xml_semantics}}.
 
+- Added the optional public key element
+
 - The reference to the DNSSEC Practice Statement {{DPS}} was updated.
 
 - Say explicitly that the XML documents might have XML comments in them.
@@ -167,15 +173,20 @@ IANA publishes trust anchors for the root zone as an XML document that contains 
 This format and the semantics associated are described in
 the rest of this section.
 
+## Hashes and Keys in XML {#hashes}
+
 Note that the XML document can have XML comments.
 For example, IANA might use these comments to add pointers to important information on the IANA web site.
 XML comments are only used as human-readable commentary, not extensions to the grammar.
 
-## Hashes in XML {#hashes}
-
 The XML document contains a set of hashes for the DNSKEY records that
 can be used to validate the root zone.  The hashes are consistent
-with the defined presentation format of DS resource .
+with the defined presentation format of DS resource.
+
+The XML document also can contain the keys from the DNSKEY records.
+The keys are consistent with the defined presentation format of DNSKEY resource.
+
+Note that the hashes are mandatory in the syntax, but the keys are optional.
 
 ### XML Syntax {#xml_syntax}
 
@@ -204,7 +215,8 @@ keydigest = element KeyDigest {
             xsd:nonNegativeInteger { maxInclusive = "255" } },
     element DigestType {
             xsd:nonNegativeInteger { maxInclusive = "255" } },
-    element Digest { xsd:hexBinary }
+    element Digest { xsd:hexBinary },
+    element PublicKey { xsd:base64Binary }?
 }
                            Figure 1
 ~~~
@@ -263,7 +275,11 @@ The Digest element in the KeyDigest element contains the hexadecimal
 representation of the hash for the DNSKEY record represented in this
 KeyDigest.
 
-### Converting from XML to DS Records
+The PublicKey element in the KeyDigest element contains the base64
+representation of the public key represented in this KeyDigest.
+The PublicKey is optional and is new in this version of the specification.
+
+### Converting from XML to DS Records {#conversion-example}
 
 The display format for the DS record that is the equivalent of a
 KeyDigest element can be constructed by marshaling the KeyTag,
@@ -283,6 +299,15 @@ the TrustAnchor element contains:
 <Digest>
 49AAC11D7B6F6446702E54A1607371607A1A41855200FD2CE1CDDE32F24E8FB5
 </Digest>
+<PublicKey>
+AwEAAagAIKlVZrpC6Ia7gEzahOR+9W29euxhJhVVLOyQbSEW0O8gcCjF
+FVQUTf6v58fLjwBd0YI0EzrAcQqBGCzh/RStIoO8g0NfnfL2MTJRkxoX
+bfDaUeVPQuYEhg37NZWAJQ9VnMVDxP/VHL496M/QZxkjf5/Efucp2gaD
+X6RS6CXpoY68LsvPVjR0ZSwzz1apAzvN9dlzEheX7ICJBBtuA6G3LQpz
+W5hOA2hzCTMjJPJ8LbqF6dsV6DoBQzgul0sGIcGOYl7OyQdXfZ57relS
+Qageu+ipAdTTJ25AsRTAoub8ONGcLmqrAmRLKBP1dfwhYB4N7knNnulq
+QxA+Uk1ihz0=
+</PublicKey>
 </KeyDigest>
 </TrustAnchor>
 ~~~
@@ -292,6 +317,24 @@ The DS record would be:
 ~~~
 . IN DS 19036 8 2
    49AAC11D7B6F6446702E54A1607371607A1A41855200FD2CE1CDDE32F24E8FB5
+~~~
+
+### Converting from XML to DNSKEY Records
+
+The display format for the DNSKEY record that is the equivalent of a KeyDigest element can be constructed by marshaling the
+Algorithm and PublicKey elements with some constants.
+For example, assume that the TrustAnchor element is the same as in {{conversion-example}}.
+The DNSKEY record would be:
+
+~~~
+. IN DNSKEY 257 3 8
+   AwEAAagAIKlVZrpC6Ia7gEzahOR+9W29euxhJhVVLOyQbSEW0O8gcCjF
+   FVQUTf6v58fLjwBd0YI0EzrAcQqBGCzh/RStIoO8g0NfnfL2MTJRkxoX
+   bfDaUeVPQuYEhg37NZWAJQ9VnMVDxP/VHL496M/QZxkjf5/Efucp2gaD
+   X6RS6CXpoY68LsvPVjR0ZSwzz1apAzvN9dlzEheX7ICJBBtuA6G3LQpz
+   W5hOA2hzCTMjJPJ8LbqF6dsV6DoBQzgul0sGIcGOYl7OyQdXfZ57relS
+   Qageu+ipAdTTJ25AsRTAoub8ONGcLmqrAmRLKBP1dfwhYB4N7knNnulq
+   QxA+Uk1ihz0=   
 ~~~
 
 ### XML Example
