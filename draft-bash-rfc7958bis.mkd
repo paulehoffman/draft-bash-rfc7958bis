@@ -1,7 +1,7 @@
 ---
 title: DNSSEC Trust Anchor Publication for the Root Zone
 abbrev: Root Zone Trust Anchor Publication
-docname: draft-bash-rfc7958bis-00
+docname: draft-bash-rfc7958bis-02
 
 stand_alone: true
 v: 3
@@ -40,16 +40,12 @@ author:
 normative:
   RFC1034:
   RFC1035:
-  RFC2986:
-  RFC3339:
   RFC4033:
   RFC5011:
-  RFC5280:
   RFC5652:
   RFC9364:
 
 informative:
-  RFC4880:
   DPS:
     title: DNSSEC Practice Statement for the Root Zone KSK Operator
     author:
