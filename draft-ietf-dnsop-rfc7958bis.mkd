@@ -1,17 +1,21 @@
 ---
 title: DNSSEC Trust Anchor Publication for the Root Zone
 abbrev: Root Zone Trust Anchor Publication
-docname: draft-bash-rfc7958bis-02
+docname: draft-ietf-dnsop-rfc7958bis-00
 
 stand_alone: true
-v: 3
 obsoletes: 7958
 
+submissiontype: IETF
+number:
+consensus: true
+v: 3
 ipr: trust200902
-kw: Internet-Draft
 cat: info
-consensus: false
-submissionType: independent
+
+venue:
+  group: "DNSOP WG"
+  github: "paulehoffman/draft-bash-rfc7958bis"
 
 author:
 -
@@ -89,8 +93,8 @@ cryptographically signed using DNS Security Extensions (DNSSEC).
 
 In order to obtain secure answers from the root zone of the DNS using
 DNSSEC, a client must configure a suitable trust anchor.  This
-document describes the format and publication mechanisms IANA has
-used to distribute the DNSSEC trust anchors.
+document describes the format and publication mechanisms IANA intends to use
+to distribute the DNSSEC trust anchors.
 
 --- middle
 
@@ -440,6 +444,6 @@ Many pioneers paved the way for the deployment of DNSSEC in the root
 zone of the DNS, and the authors hereby acknowledge their substantial
 collective contribution.
 
-This document incorporates suggestions made by Alfred Hoenes and Russ
+RFC 7958 incorporated suggestions made by Alfred Hoenes and Russ
 Housley, whose contributions are appreciated.
 
