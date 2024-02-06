@@ -112,9 +112,7 @@ anchors is required for the DNSSEC protocol to work.
 
 The publication of trust anchors for the root zone of the DNS is an
 IANA function performed by ICANN, through its affiliate Public Technical Identifiers (PTI). A detailed description of
-corresponding key management practices can be found in {{DPS}}, which
-can be retrieved from the IANA Repository at
-&lt;https://www.iana.org/dnssec/&gt;.
+corresponding key management practices can be found in {{DPS}}.
 
 This document describes the formats and distribution methods of
 DNSSEC trust anchors that have been used by IANA for the root zone of
