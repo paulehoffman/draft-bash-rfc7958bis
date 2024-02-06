@@ -92,9 +92,8 @@ The root zone of the Domain Name System (DNS) has been
 cryptographically signed using DNS Security Extensions (DNSSEC).
 
 In order to obtain secure answers from the root zone of the DNS using
-DNSSEC, a client must configure a suitable trust anchor.  This
-document describes the format and publication mechanisms IANA intends to use
-to distribute the DNSSEC trust anchors.
+DNSSEC, a client must configure a suitable trust anchor. 
+This document describes the format and publication mechanisms IANA uses to distribute the DNSSEC trust anchors.
 
 --- middle
 
