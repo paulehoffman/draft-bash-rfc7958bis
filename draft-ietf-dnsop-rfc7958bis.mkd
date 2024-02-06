@@ -427,14 +427,21 @@ trust anchors to be integrated into user environments.
 # Historical Note
 
 The first KSK for use in the root zone of the DNS was
-generated at a key ceremony at an ICANN Key Management Facility
+generated at a key ceremony at the ICANN Key Management Facility
 (KMF) in Culpeper, Virginia, USA on 2010-06-16.  This key
 entered production during a second key ceremony held at an
 ICANN KMF in El Segundo, California, USA on 2010-07-12.
 The resulting trust anchor was first published on 2010-07-15.
 
 The second KSK for use in the root zone of the DNS was
-\[ MORE GOES HERE \].
+generated at key ceremony #27 at the ICANN KMF in Culpeper, Virginia, USA on 2016-10-27.
+This key entered production during key ceremony #28 held at
+the ICANN KMF in El Segundo, California, USA on 2017-02-02.
+The resulting trust anchor was first published on 2018-11-11.
+
+More information about the key ceremones,
+including full records of previous ceremonies and plans for future ceremonies,
+can be found at &lt;https://www.iana.org/dnssec/ceremonies&gt;.
 
 # Acknowledgemwents
 
