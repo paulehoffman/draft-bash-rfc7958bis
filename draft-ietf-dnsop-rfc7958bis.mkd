@@ -69,10 +69,6 @@ informative:
 
 <!-- Notes for co-authors
 
-PH: There was discussion in the algorithm rollover design team about adding comments to the XML file.
-We know that developers read the file, and the comments could be helpful to them to understand things like
-where they can find out more information about the future rollover.
-
 PH: I would like to re-open the discussion of whether IANA should be publishing the PKIX and CSR files,
 and when. Duane Wessels has charts that show that some resolvers are using the future trust anchor
 keys before they are published in the root zone. That could happen if they pull the keys from the
