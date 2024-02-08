@@ -78,8 +78,6 @@ and when. Duane Wessels has charts that show that some resolvers are using the f
 keys before they are published in the root zone. That could happen if they pull the keys from the
 key ceremony records, but it could also happen if IANA publishes the keys in the PKIX and CSR files.
 
-PH: Appendix A needs to be filled in with the actual steps that happened for KSK 2017.
-
 PH: Maybe get rid of the two figure numbers because they aren't used everywhere and they
 are not referenced except for right above the figures.
 
