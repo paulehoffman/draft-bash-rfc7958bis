@@ -80,6 +80,12 @@ are not referenced except for right above the figures.
 PH: Make the wording the present active tense throughout.
 For example, "is cryptographically signed" instead of "has been cryptographically signed".
 
+PH via Joe: Have an IANA Considerations section that specifies exactly what IANA should do
+and no longer needs to do. 
+
+PH via Joe: Be more explicit that the resulf of not doing the S/MIME and PGP signed 
+files is that the distribution relies on the web PKI and gossip.
+
 -->
 
 The root zone of the Domain Name System (DNS) has been
