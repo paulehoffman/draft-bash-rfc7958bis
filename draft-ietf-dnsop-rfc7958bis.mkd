@@ -1,7 +1,7 @@
 ---
 title: DNSSEC Trust Anchor Publication for the Root Zone
 abbrev: Root Zone Trust Anchor Publication
-docname: draft-ietf-dnsop-rfc7958bis-01
+docname: draft-ietf-dnsop-rfc7958bis-02
 
 stand_alone: true
 obsoletes: 7958
