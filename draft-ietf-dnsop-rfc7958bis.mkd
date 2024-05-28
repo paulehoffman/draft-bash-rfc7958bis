@@ -162,6 +162,8 @@ This is in the seventh paragraph of {{xml_semantics}}.
 
 - Say explicitly that the XML documents might have XML comments in them.
 
+- Added an IANA Considerations section.
+
 # IANA DNSSEC Root Zone Trust Anchor Format and Semantics {#ta_formats}
 
 IANA publishes trust anchors for the root zone as an XML document that contains the hashes of the DNSKEY records
@@ -419,6 +421,16 @@ This document aims to specify carefully the means by which such trust
 anchors are published, with the goal of making it easier for those
 trust anchors to be integrated into user environments.
 
+# IANA Considerations
+
+Each time IANA produces a new trust anchor,
+it SHOULD publish it using the format described in this document.
+
+IANA MAY delay the publication of a new trust anchor for operational reasons,
+such as having sufficient backup of a newly-created key in multiple facilities.
+
+When a trust anchor that was published earlier is no longer valid,
+IANA SHOULD update the trust anchor file to reflect that fact by setting a validUntil date for the trust anchor.
 
 --- back
 
