@@ -83,7 +83,7 @@ files is that the distribution relies on the web PKI and gossip.
 
 -->
 
-The root zone of the Domain Name System (DNS) has been
+The root zone of the Domain Name System (DNS) is
 cryptographically signed using DNS Security Extensions (DNSSEC).
 
 In order to obtain secure answers from the root zone of the DNS using
