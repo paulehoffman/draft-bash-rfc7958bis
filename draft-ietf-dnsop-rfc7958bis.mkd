@@ -407,6 +407,17 @@ retrieving the trust anchors trusts the CA that IANA uses for the
 "data.iana.org" web server, HTTPS SHOULD be used instead of HTTP in
 order to have assurance of data origin.
 
+## Changes in the Trust Model for Distribution
+
+IANA used to also distribute the trust anchors as a self-signed PGP message
+and as a self-issued certificate signing request.
+This document removes those methods because they relied on a confusing trust model
+that mixed out-of-band trust of authentication keys with out-of-band trust of the DNSSEC root keys.
+Note, however, that now cryptographic assurance for the contents of the trust anchor
+comes from the web PKI as described in {{trusting_anchors}}.
+This cryptographic assurance is bolstered by informal comparisons made by users of the
+trust anchors, such as software vendors comparing the trust anchor files they are using.
+
 # Security Considerations
 
 This document describes how DNSSEC trust anchors for the root zone of
