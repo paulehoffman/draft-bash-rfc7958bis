@@ -162,6 +162,8 @@ This is in the seventh paragraph of {{xml_semantics}}.
 
 - Say explicitly that the XML documents might have XML comments in them.
 
+- There was a bit of editorial cleanup.
+
 # IANA DNSSEC Root Zone Trust Anchor Format and Semantics {#ta_formats}
 
 IANA publishes trust anchors for the root zone as an XML document that contains the hashes of the DNSKEY records
