@@ -47,6 +47,7 @@ normative:
   RFC4033:
   RFC5011:
   RFC5652:
+  RFC7958:
   RFC9364:
 
 informative:
@@ -90,6 +91,8 @@ In order to obtain secure answers from the root zone of the DNS using
 DNSSEC, a client must configure a suitable trust anchor. 
 This document describes the format and publication mechanisms IANA uses to distribute the DNSSEC trust anchors.
 
+This document obsoletes RFC 7958.
+
 --- middle
 
 # Introduction
@@ -122,6 +125,8 @@ anchor update protocol described in {{RFC5011}}.  That protocol allows
 for secure in-band succession of trust anchors when trust has already
 been established.  This document describes one way to establish an
 initial trust anchor that can be used by RFC 5011.
+
+This document obsoletes {{RFC7958}}.
 
 ## Definitions
 
@@ -406,6 +411,17 @@ that is, one that is a WebTrust-accredited CA.  If a system
 retrieving the trust anchors trusts the CA that IANA uses for the
 "data.iana.org" web server, HTTPS SHOULD be used instead of HTTP in
 order to have assurance of data origin.
+
+## Changes in the Trust Model for Distribution
+
+IANA used to distribute the trust anchors as a self-signed PGP message
+and as a self-issued certificate signing request; this was described in {{RFC7958}}.
+This document removes those methods because they relied on a trust model
+that mixed out-of-band trust of authentication keys with out-of-band trust of the DNSSEC root keys.
+Note, however, that cryptographic assurance for the contents of the trust anchor now
+comes from the web PKI as described in {{trusting_anchors}}.
+This cryptographic assurance is bolstered by informal comparisons made by users of the
+trust anchors, such as software vendors comparing the trust anchor files they are using.
 
 # Security Considerations
 
