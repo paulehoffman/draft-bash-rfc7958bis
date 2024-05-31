@@ -433,6 +433,10 @@ When a trust anchor that was previously published is no longer suitable for use,
 IANA MUST update the trust anchor document accordingly by setting a validUntil date for that trust anchor.
 The validUntil attribute that is added MAY be a date in the past or in the future, depending on circumstances.
 
+More information about IANA's policies and procedures for how the cryptographic keys for the DNS root zone are managed
+(also known as "DNSSEC Practice Statements" or "DPSs"),
+can be found at &lt;https://www.iana.org/dnssec/procedures&gt;.
+
 --- back
 
 # Historical Note
