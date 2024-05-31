@@ -424,13 +424,14 @@ trust anchors to be integrated into user environments.
 # IANA Considerations
 
 Each time IANA produces a new trust anchor,
-it SHOULD publish it using the format described in this document.
+it MUST publish it using the format described in this document.
 
 IANA MAY delay the publication of a new trust anchor for operational reasons,
-such as having sufficient backup of a newly-created key in multiple facilities.
+such as having a newly-created key in multiple facilities.
 
-When a trust anchor that was published earlier is no longer valid,
-IANA SHOULD update the trust anchor file to reflect that fact by setting a validUntil date for the trust anchor.
+When a trust anchor that was previously published is no longer suitable for use,
+IANA MUST update the trust anchor document accordingly by setting a validUntil date for that trust anchor.
+The validUntil attribute that is added MAY be a date in the past or in the future, depending on circumstances.
 
 --- back
 
