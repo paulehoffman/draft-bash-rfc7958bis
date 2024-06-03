@@ -1,7 +1,7 @@
 ---
 title: DNSSEC Trust Anchor Publication for the Root Zone
 abbrev: Root Zone Trust Anchor Publication
-docname: draft-ietf-dnsop-rfc7958bis-01
+docname: draft-ietf-dnsop-rfc7958bis-02
 
 stand_alone: true
 obsoletes: 7958
@@ -84,7 +84,7 @@ files is that the distribution relies on the web PKI and gossip.
 
 -->
 
-The root zone of the Domain Name System (DNS) has been
+The root zone of the Domain Name System (DNS) is
 cryptographically signed using DNS Security Extensions (DNSSEC).
 
 In order to obtain secure answers from the root zone of the DNS using
