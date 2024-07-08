@@ -152,6 +152,8 @@ This is in the seventh paragraph of {{xml_semantics}}.
 
 - Say explicitly that the XML documents might have XML comments in them.
 
+- Clarified the use of the detached CMS signature.
+
 - Added an IANA Considerations section.
 
 - There was a bit of editorial cleanup.
@@ -267,6 +269,8 @@ KeyDigest.
 The PublicKey element in the KeyDigest element contains the base64
 representation of the public key represented in this KeyDigest.
 The PublicKey is optional and is new in this version of the specification.
+It can be useful when IANA has a trust anchor that has not yet been published
+in the DNS root.
 
 ## Converting from XML to DS Records {#conversion-example}
 
@@ -386,7 +390,10 @@ content and origin of the XML and certificate trust anchors.
 The content and origin of the XML file can be verified using a
 digital signature on the file.  IANA provides a detached
 Cryptographic Message Syntax (CMS) {{RFC5652}} signature that chains to
-the ICANN CA with the XML file.  The URL for a detached CMS signature
+the ICANN CA with the XML file.  
+This can be useful for validator operators who have received a copy
+of the ICANN CA's public key in a trusted out-of-band fashion.
+The URL for a detached CMS signature
 for the XML file is
 &lt;https://data.iana.org/root-anchors/root-anchors.p7s&gt;.
 
