@@ -122,7 +122,8 @@ just for S/MIME messages.
 In cryptographic systems with hierarchical structure, a trust anchor
 is an authoritative entity for which trust is assumed and not
 derived.  The format of the entity differs in different systems, but
-the basic idea, that trust is assumed and not derived, is common to
+the basic idea, the decision to trust this entity is made outside of the system that relies on it,
+is common to
 all the common uses of the term "trust anchor".
 
 The root zone trust anchor formats published by IANA are defined in
@@ -405,7 +406,7 @@ and as a self-issued certificate signing request; this was described in {{RFC795
 This document removes those methods because they relied on a trust model
 that mixed out-of-band trust of authentication keys with out-of-band trust of the DNSSEC root keys.
 Note, however, that cryptographic assurance for the contents of the trust anchor now
-comes from the web PKI as described in {{trusting_anchors}}.
+comes from the web PKI or the IANA CA as described in {{trusting_anchors}}.
 This cryptographic assurance is bolstered by informal comparisons made by users of the
 trust anchors, such as software vendors comparing the trust anchor files they are using.
 
