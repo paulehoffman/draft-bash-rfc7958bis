@@ -232,8 +232,8 @@ this container applies.  The root zone is indicated by a single
 period (.) character without any quotation marks.
 
 The TrustAnchor element contains one or more KeyDigest elements.
-Each KeyDigest element represents the digest of a DNSKEY record in
-the zone defined in the Zone element.
+Each KeyDigest element represents the digest of a past, current, or
+potential future DNSKEY record of the zone defined in the Zone element.
 
 The `id` attribute in the KeyDigest element is an opaque string that
 identifies the hash.
@@ -420,8 +420,8 @@ trust anchors, such as software vendors comparing the trust anchor files they ar
 # Security Considerations
 
 This document describes how DNSSEC trust anchors for the root zone of
-the DNS are published.  Many DNSSEC clients will only configure IANA-
-issued trust anchors for the DNS root to perform validation.  As a
+the DNS are published.  Many DNSSEC clients will only configure IANA-issued
+trust anchors for the DNS root to perform validation.  As a
 consequence, reliable publication of trust anchors is important.
 
 This document aims to specify carefully the means by which such trust
