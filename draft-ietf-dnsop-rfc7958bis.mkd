@@ -56,7 +56,6 @@ informative:
     author:
     - org: Root Zone KSK Operator Policy Management Authority
     target: https://www.iana.org/dnssec/procedures
-    date: 2020
   RELAX-NG:
     title: RELAX NG Compact Syntax
     author:
