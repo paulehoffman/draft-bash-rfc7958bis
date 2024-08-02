@@ -433,6 +433,9 @@ consequence, reliable publication of trust anchors is important.
 This document aims to specify carefully the means by which such trust
 anchors are published, with the goal of making it easier for those
 trust anchors to be integrated into user environments.
+Some of the methods described (such as accessing over the web
+with or without verifying the signature on the file) have different security properties;
+users of the trust anchor file need to consider these when choosing whether to load the set of trust anchors.
 
 # IANA Considerations
 
