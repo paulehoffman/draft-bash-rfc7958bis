@@ -229,7 +229,9 @@ about where to obtain the TrustAnchor container.  It is likely to be
 a URL and is advisory only.
 
 The Zone element in the TrustAnchor element states to which DNS zone
-this container applies.  The root zone is indicated by a single
+this container applies.
+The element is in presentation format as specified in {{RFC1035}}, including the trailing dot.
+The root zone is indicated by a single
 period (.) character without any quotation marks.
 
 The TrustAnchor element contains one or more KeyDigest elements.
