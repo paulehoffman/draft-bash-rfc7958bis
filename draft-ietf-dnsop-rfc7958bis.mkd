@@ -251,7 +251,7 @@ If the relying party is using a trust anchor that has a KeyDigest element
 that does not have a `validUntil` attribute, it can change to a trust anchor
 with a KeyDigest element that does have a `validUntil` attribute,
 as long as that trust anchor's `validUntil` attribute is in the future and the
-DNSKEY elements of the KeyDigest are the same as the previous trust anchor.
+KeyTag, Algorithm, DigestType, and Digest elements of the KeyDigest are the same as the previous trust anchor.
 
 Relying parties SHOULD NOT use a KeyDigest outside of the time range given
 in the `validFrom` and `validUntil` attributes.
