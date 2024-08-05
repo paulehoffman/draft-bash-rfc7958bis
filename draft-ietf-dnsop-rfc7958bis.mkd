@@ -153,7 +153,7 @@ This is in the seventh paragraph of {{xml_semantics}}.
 
 - Clarified the use of the detached CMS signature.
 
-- Updated the IANA Considerations sectionto indicate requirements on IANA.
+- Updated the IANA Considerations section to indicate requirements on IANA.
 
 - Simplified the description of using the validFrom and validUntil attributes.
 
