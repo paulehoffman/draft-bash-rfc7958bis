@@ -45,9 +45,11 @@ normative:
   RFC1034:
   RFC1035:
   RFC4033:
+  RFC4034:
   RFC5011:
   RFC5652:
   RFC7958:
+  RFC9157:
   RFC9364:
 
 informative:
@@ -67,7 +69,7 @@ informative:
 
 --- abstract
 
-The root zone of the Domain Name System (DNS) is
+The root zone of the global Domain Name System (DNS) is
 cryptographically signed using DNS Security Extensions (DNSSEC).
 
 In order to obtain secure answers from the root zone of the DNS using
@@ -80,7 +82,7 @@ This document obsoletes RFC 7958.
 
 # Introduction
 
-The Domain Name System (DNS) is described in {{RFC1034}} and {{RFC1035}}.
+The global Domain Name System (DNS) is described in {{RFC1034}} and {{RFC1035}}.
 DNS Security Extensions (DNSSEC) are described in {{RFC9364}}.
 
 In the DNSSEC protocol, Resource Record Sets (RRSets) are signed
@@ -237,6 +239,8 @@ period (.) character without any quotation marks.
 The TrustAnchor element contains one or more KeyDigest elements.
 Each KeyDigest element represents the digest of a past, current, or
 potential future DNSKEY record of the zone defined in the Zone element.
+The values for the elements in the KeyDigest element are defined in {{RFC4034}}.
+The IANA registries for these values are described in {{RFC9157}}.
 
 The `id` attribute in the KeyDigest element is an opaque string that
 identifies the hash.
@@ -259,11 +263,11 @@ in the `validFrom` and `validUntil` attributes.
 The KeyTag element in the KeyDigest element contains the key tag for
 the DNSKEY record represented in this KeyDigest.
 
-The Algorithm element in the KeyDigest element contains the signing
+The Algorithm element in the KeyDigest element contains the DNSSEC signing
 algorithm identifier for the DNSKEY record represented in this
 KeyDigest.
 
-The DigestType element in the KeyDigest element contains the digest
+The DigestType element in the KeyDigest element contains the DNSSEC digest
 algorithm identifier for the DNSKEY record represented in this
 KeyDigest.
 
