@@ -192,26 +192,30 @@ publish trust anchors is:
 datatypes xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
 
 start = element TrustAnchor {
-    attribute id { xsd:string },
-    attribute source { xsd:string },
-    element Zone { xsd:string },
+  attribute id { xsd:string },
+  attribute source { xsd:string },
+  element Zone { xsd:string },
 
-    keydigest+
+  keydigest+
 }
 
 keydigest = element KeyDigest {
-    attribute id { xsd:string },
-    attribute validFrom { xsd:dateTime },
-    attribute validUntil { xsd:dateTime }?,
+  attribute id { xsd:string },
+  attribute validFrom { xsd:dateTime },
+  attribute validUntil { xsd:dateTime }?,
 
-    element KeyTag {
-            xsd:nonNegativeInteger { maxInclusive = "65535" } },
-    element Algorithm {
-            xsd:nonNegativeInteger { maxInclusive = "255" } },
-    element DigestType {
-            xsd:nonNegativeInteger { maxInclusive = "255" } },
-    element Digest { xsd:hexBinary },
-    element PublicKey { xsd:base64Binary }?
+  element KeyTag {
+      xsd:nonNegativeInteger { maxInclusive = "65535" } },
+  element Algorithm {
+      xsd:nonNegativeInteger { maxInclusive = "255" } },
+  element DigestType {
+      xsd:nonNegativeInteger { maxInclusive = "255" } },
+  element Digest { xsd:hexBinary },
+  element PublicKeyInfo { 
+      element PublicKey { xsd:base64Binary },
+      element Flags {
+           xsd:nonNegativeInteger { maxInclusive = "65535" } }
+  }?
 }
 ~~~
 
@@ -275,11 +279,12 @@ The Digest element in the KeyDigest element contains the hexadecimal
 representation of the hash for the DNSKEY record represented in this
 KeyDigest.
 
-The PublicKey element in the KeyDigest element contains the base64
-representation of the public key represented in this KeyDigest.
-The PublicKey is optional and is new in this version of the specification.
+The PublicKeyInfo element in the KeyDigest element contains two mandatory elements:
+the base64 representation of the public key for the DNSKEY record represented in this KeyDigest,
+and the flags of the DNSKEY record represented in this KeyDigest.
+The PublicKeyInfo is optional and is new in this version of the specification.
 It can be useful when IANA has a trust anchor that has not yet been published
-in the DNS root.
+in the DNS root, and for calculating a comparison to the Digest element.
 
 ## Converting from XML to DS Records {#conversion-example}
 
@@ -301,6 +306,7 @@ the TrustAnchor element contains:
 <Digest>
 49AAC11D7B6F6446702E54A1607371607A1A41855200FD2CE1CDDE32F24E8FB5
 </Digest>
+<PublicKeyInfo>
 <PublicKey>
 AwEAAagAIKlVZrpC6Ia7gEzahOR+9W29euxhJhVVLOyQbSEW0O8gcCjF
 FVQUTf6v58fLjwBd0YI0EzrAcQqBGCzh/RStIoO8g0NfnfL2MTJRkxoX
@@ -310,6 +316,8 @@ W5hOA2hzCTMjJPJ8LbqF6dsV6DoBQzgul0sGIcGOYl7OyQdXfZ57relS
 Qageu+ipAdTTJ25AsRTAoub8ONGcLmqrAmRLKBP1dfwhYB4N7knNnulq
 QxA+Uk1ihz0=
 </PublicKey>
+<Flags>257</Flags>
+</PublicKeyInfo>
 </KeyDigest>
 </TrustAnchor>
 ~~~
@@ -324,7 +332,7 @@ The DS record would be:
 ## Converting from XML to DNSKEY Records
 
 The display format for the DNSKEY record that is the equivalent of a KeyDigest element can be constructed by marshaling the
-Algorithm and PublicKey elements with some constants.
+Algorithm and PublicKeyInfo elements with some constants.
 For example, assume that the TrustAnchor element is the same as in {{conversion-example}}.
 The DNSKEY record would be:
 
@@ -418,8 +426,8 @@ retrieving the trust anchors trusts the CA that IANA uses for the
 "data.iana.org" web server, HTTPS SHOULD be used instead of HTTP in
 order to have assurance of data origin.
 
-A KeyDigest element can contain both a Digest and a PublicKey element.
-If the Digest element would not be a proper DS record for a DNSKEY record represented by the PublicKey element,
+A KeyDigest element can contain both a Digest and a PublicKeyInfo element.
+If the Digest element would not be a proper DS record for a DNSKEY record represented by the PublicKeyInfo element,
 relying parties MUST NOT use that KeyDigest as a trust anchor.
 
 
