@@ -153,7 +153,7 @@ This is in the seventh paragraph of {{xml_semantics}}.
 
 - Clarified the use of the detached CMS signature.
 
-- Added an IANA Considerations section.
+- Updated the IANA Considerations section to indicate requirements on IANA.
 
 - Simplified the description of using the validFrom and validUntil attributes.
 
@@ -229,7 +229,9 @@ about where to obtain the TrustAnchor container.  It is likely to be
 a URL and is advisory only.
 
 The Zone element in the TrustAnchor element states to which DNS zone
-this container applies.  The root zone is indicated by a single
+this container applies.
+The element is in presentation format as specified in {{RFC1035}}, including the trailing dot.
+The root zone is indicated by a single
 period (.) character without any quotation marks.
 
 The TrustAnchor element contains one or more KeyDigest elements.
@@ -249,7 +251,7 @@ If the relying party is using a trust anchor that has a KeyDigest element
 that does not have a `validUntil` attribute, it can change to a trust anchor
 with a KeyDigest element that does have a `validUntil` attribute,
 as long as that trust anchor's `validUntil` attribute is in the future and the
-DNSKEY elements of the KeyDigest are the same as the previous trust anchor.
+KeyTag, Algorithm, DigestType, and Digest elements of the KeyDigest are the same as the previous trust anchor.
 
 Relying parties SHOULD NOT use a KeyDigest outside of the time range given
 in the `validFrom` and `validUntil` attributes.
@@ -411,6 +413,11 @@ that is, one that is a WebTrust-accredited CA.  If a system
 retrieving the trust anchors trusts the CA that IANA uses for the
 "data.iana.org" web server, HTTPS SHOULD be used instead of HTTP in
 order to have assurance of data origin.
+
+A KeyDigest element can contain both a Digest and a PublicKey element.
+If the Digest element would not be a proper DS record for a DNSKEY record represented by the PublicKey element,
+relying parties MUST NOT use that KeyDigest as a trust anchor.
+
 
 ## Changes in the Trust Model for Distribution
 
