@@ -195,7 +195,6 @@ start = element TrustAnchor {
   attribute id { xsd:string },
   attribute source { xsd:string },
   element Zone { xsd:string },
-
   keydigest+
 }
 
@@ -210,13 +209,14 @@ keydigest = element KeyDigest {
       xsd:nonNegativeInteger { maxInclusive = "255" } },
   element DigestType {
       xsd:nonNegativeInteger { maxInclusive = "255" } },
-  element Digest { xsd:hexBinary },
-  element PublicKeyInfo { 
-      element PublicKey { xsd:base64Binary },
-      element Flags {
-           xsd:nonNegativeInteger { maxInclusive = "65535" } }
-  }?
+  element Digest { xsd:hexBinary },  
+  publickeyinfo?
 }
+
+publickeyinfo =
+  element PublicKey { xsd:base64Binary },
+  element Flags {
+     xsd:nonNegativeInteger { maxInclusive = "65535" } }
 ~~~
 
 ## XML Semantics {#xml_semantics}
@@ -279,10 +279,10 @@ The Digest element in the KeyDigest element contains the hexadecimal
 representation of the hash for the DNSKEY record represented in this
 KeyDigest.
 
-The PublicKeyInfo element in the KeyDigest element contains two mandatory elements:
+The publickeyinfo named pattern in the KeyDigest element contains two mandatory elements:
 the base64 representation of the public key for the DNSKEY record represented in this KeyDigest,
 and the flags of the DNSKEY record represented in this KeyDigest.
-The PublicKeyInfo is optional and is new in this version of the specification.
+The publickeyinfo named pattern is optional and is new in this version of the specification.
 It can be useful when IANA has a trust anchor that has not yet been published
 in the DNS root, and for calculating a comparison to the Digest element.
 
@@ -315,7 +315,6 @@ a validFrom ttime in the past.
 <Digest>
   E06D44B80B8F1D39A95C0B0D7C65D08458E880409BBC683457104237C7F8EC8D
 </Digest>
-<PublicKeyInfo>
 <PublicKey>
   AwEAAaz/tAm8yTn4Mfeh5eyI96WSVexTBAvkMgJzkKTOiW1vkIbzxeF3+/4RgWOq7
   HrxRixHlFlExOLAJr5emLvN7SWXgnLh4+B5xQlNVz8Og8kvArMtNROxVQuCaSnIDd
@@ -325,7 +324,6 @@ a validFrom ttime in the past.
   subX2Nn6UwNR1AkUTV74bU=
 </PublicKey>
 <Flags>257</Flags>
-</PublicKeyInfo>
 </KeyDigest>
 ~~~
 
@@ -383,8 +381,8 @@ retrieving the trust anchors trusts the CA that IANA uses for the
 "data.iana.org" web server, HTTPS SHOULD be used instead of HTTP in
 order to have assurance of data origin.
 
-A KeyDigest element can contain both a Digest and a PublicKeyInfo element.
-If the Digest element would not be a proper DS record for a DNSKEY record represented by the PublicKeyInfo element,
+A KeyDigest element can contain both a Digest and a publickeyinfo named pattern.
+If the Digest element would not be a proper DS record for a DNSKEY record represented by the publickeyinfo named pattern,
 relying parties MUST NOT use that KeyDigest as a trust anchor.
 
 
