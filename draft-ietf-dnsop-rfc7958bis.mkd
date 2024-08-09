@@ -192,27 +192,31 @@ publish trust anchors is:
 datatypes xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
 
 start = element TrustAnchor {
-    attribute id { xsd:string },
-    attribute source { xsd:string },
-    element Zone { xsd:string },
-
-    keydigest+
+  attribute id { xsd:string },
+  attribute source { xsd:string },
+  element Zone { xsd:string },
+  keydigest+
 }
 
 keydigest = element KeyDigest {
-    attribute id { xsd:string },
-    attribute validFrom { xsd:dateTime },
-    attribute validUntil { xsd:dateTime }?,
+  attribute id { xsd:string },
+  attribute validFrom { xsd:dateTime },
+  attribute validUntil { xsd:dateTime }?,
 
-    element KeyTag {
-            xsd:nonNegativeInteger { maxInclusive = "65535" } },
-    element Algorithm {
-            xsd:nonNegativeInteger { maxInclusive = "255" } },
-    element DigestType {
-            xsd:nonNegativeInteger { maxInclusive = "255" } },
-    element Digest { xsd:hexBinary },
-    element PublicKey { xsd:base64Binary }?
+  element KeyTag {
+      xsd:nonNegativeInteger { maxInclusive = "65535" } },
+  element Algorithm {
+      xsd:nonNegativeInteger { maxInclusive = "255" } },
+  element DigestType {
+      xsd:nonNegativeInteger { maxInclusive = "255" } },
+  element Digest { xsd:hexBinary },  
+  publickeyinfo?
 }
+
+publickeyinfo =
+  element PublicKey { xsd:base64Binary },
+  element Flags {
+     xsd:nonNegativeInteger { maxInclusive = "65535" } }
 ~~~
 
 ## XML Semantics {#xml_semantics}
@@ -275,104 +279,64 @@ The Digest element in the KeyDigest element contains the hexadecimal
 representation of the hash for the DNSKEY record represented in this
 KeyDigest.
 
-The PublicKey element in the KeyDigest element contains the base64
-representation of the public key represented in this KeyDigest.
-The PublicKey is optional and is new in this version of the specification.
+The publickeyinfo named pattern in the KeyDigest element contains two mandatory elements:
+the base64 representation of the public key for the DNSKEY record represented in this KeyDigest,
+and the flags of the DNSKEY record represented in this KeyDigest.
+The publickeyinfo named pattern is optional and is new in this version of the specification.
 It can be useful when IANA has a trust anchor that has not yet been published
-in the DNS root.
+in the DNS root, and for calculating a comparison to the Digest element.
 
-## Converting from XML to DS Records {#conversion-example}
+## XML Example
 
-The display format for the DS record that is the equivalent of a
-KeyDigest element can be constructed by marshaling the KeyTag,
-Algorithm, DigestType, and Digest elements.  For example, assume that
-the TrustAnchor element contains:
+The following is an example of what the trust anchor file might look like.
+The full public key is only given for the trust anchor that does not have
+a validFrom ttime in the past.
 
 ~~~XML
 <?xml version="1.0" encoding="UTF-8"?>
-<TrustAnchor
-   id="AD42165F-3B1A-4778-8F42-D34A1D41FD93"
-   source="http://data.iana.org/root-anchors/root-anchors.xml">
+<TrustAnchor id="E9724F53-1851-4F86-85E5-F1392102940B"
+  source="http://data.iana.org/root-anchors/root-anchors.xml">
 <Zone>.</Zone>
-<KeyDigest id="Kjqmt7v" validFrom="2010-07-15T00:00:00+00:00">
+<KeyDigest id="Kjqmt7v"
+  validFrom="2010-07-15T00:00:00+00:00"
+  validUntil="2019-01-11T00:00:00+00:00">  <!-- This key
+    is no longer valid, since validUntil is in the past -->
 <KeyTag>19036</KeyTag>
 <Algorithm>8</Algorithm>
 <DigestType>2</DigestType>
 <Digest>
-49AAC11D7B6F6446702E54A1607371607A1A41855200FD2CE1CDDE32F24E8FB5
+  49AAC11D7B6F6446702E54A1607371607A1A41855200FD2CE1CDDE32F24E8FB5
+</Digest>
+</KeyDigest>
+<KeyDigest id="Klajeyz" validFrom="2017-02-02T00:00:00+00:00">
+<KeyTag>20326</KeyTag>
+<Algorithm>8</Algorithm>
+<DigestType>2</DigestType>
+<Digest>
+  E06D44B80B8F1D39A95C0B0D7C65D08458E880409BBC683457104237C7F8EC8D
 </Digest>
 <PublicKey>
-AwEAAagAIKlVZrpC6Ia7gEzahOR+9W29euxhJhVVLOyQbSEW0O8gcCjF
-FVQUTf6v58fLjwBd0YI0EzrAcQqBGCzh/RStIoO8g0NfnfL2MTJRkxoX
-bfDaUeVPQuYEhg37NZWAJQ9VnMVDxP/VHL496M/QZxkjf5/Efucp2gaD
-X6RS6CXpoY68LsvPVjR0ZSwzz1apAzvN9dlzEheX7ICJBBtuA6G3LQpz
-W5hOA2hzCTMjJPJ8LbqF6dsV6DoBQzgul0sGIcGOYl7OyQdXfZ57relS
-Qageu+ipAdTTJ25AsRTAoub8ONGcLmqrAmRLKBP1dfwhYB4N7knNnulq
-QxA+Uk1ihz0=
+  AwEAAaz/tAm8yTn4Mfeh5eyI96WSVexTBAvkMgJzkKTOiW1vkIbzxeF3+/4RgWOq7
+  HrxRixHlFlExOLAJr5emLvN7SWXgnLh4+B5xQlNVz8Og8kvArMtNROxVQuCaSnIDd
+  D5LKyWbRd2n9WGe2R8PzgCmr3EgVLrjyBxWezF0jLHwVN8efS3rCj/EWgvIWgb9ta
+  rpVUDK/b58Da+sqqls3eNbuv7pr+eoZG+SrDK6nWeL3c6H5Apxz7LjVc1uTIdsIXx
+  uOLYA4/ilBmSVIzuDWfdRUfhHdY6+cn8HFRm+2hM8AnXGXws9555KrUB5qihylGa8
+  subX2Nn6UwNR1AkUTV74bU=
 </PublicKey>
+<Flags>257</Flags>
 </KeyDigest>
 </TrustAnchor>
 ~~~
 
-The DS record would be:
+The DS record derived from this example would be:
 
 ~~~Zone
-. IN DS 19036 8 2
-   49AAC11D7B6F6446702E54A1607371607A1A41855200FD2CE1CDDE32F24E8FB5
+. IN DS 20326 8 2
+   E06D44B80B8F1D39A95C0B0D7C65D08458E880409BBC683457104237C7F8EC8D
 ~~~
 
-## Converting from XML to DNSKEY Records
-
-The display format for the DNSKEY record that is the equivalent of a KeyDigest element can be constructed by marshaling the
-Algorithm and PublicKey elements with some constants.
-For example, assume that the TrustAnchor element is the same as in {{conversion-example}}.
-The DNSKEY record would be:
-
-~~~Zone
-. IN DNSKEY 257 3 8
-   AwEAAagAIKlVZrpC6Ia7gEzahOR+9W29euxhJhVVLOyQbSEW0O8gcCjF
-   FVQUTf6v58fLjwBd0YI0EzrAcQqBGCzh/RStIoO8g0NfnfL2MTJRkxoX
-   bfDaUeVPQuYEhg37NZWAJQ9VnMVDxP/VHL496M/QZxkjf5/Efucp2gaD
-   X6RS6CXpoY68LsvPVjR0ZSwzz1apAzvN9dlzEheX7ICJBBtuA6G3LQpz
-   W5hOA2hzCTMjJPJ8LbqF6dsV6DoBQzgul0sGIcGOYl7OyQdXfZ57relS
-   Qageu+ipAdTTJ25AsRTAoub8ONGcLmqrAmRLKBP1dfwhYB4N7knNnulq
-   QxA+Uk1ihz0=   
-~~~
-
-The published trust anchor does not provide values for DNSKEY protocol or flags.
-For the purpose of this mechanism, clients can assume valid trust anchors will be have the ZONE and SEP flag bits set to 1.
-
-## XML Example
-
-The following describes two fictitious trust anchors for the root zone.
-
-~~~XML
-<?xml version="1.0" encoding="UTF-8"?>
-
-<!-- Note that these trust anchors are fictitious. -->
-
-<TrustAnchor
-    id="AD42165F-B099-4778-8F42-D34A1D41FD93"
-    source="http://data.iana.org/root-anchors/root-anchors.xml">
-    <Zone>.</Zone>
-    <KeyDigest id="42"
-               validFrom="2010-07-01T00:00:00-00:00"
-               validUntil="2010-08-01T00:00:00-00:00"> <!-- This key
-    is no longer valid, since validUntil is in the past -->
-        <KeyTag>34291</KeyTag>
-        <Algorithm>5</Algorithm>
-        <DigestType>1</DigestType>
-        <Digest>c8cb3d7fe518835490af8029c23efbce6b6ef3e2</Digest>
-    </KeyDigest>
-    <KeyDigest id="53"
-               validFrom="2010-08-01T00:00:00-00:00">
-        <KeyTag>12345</KeyTag>
-        <Algorithm>5</Algorithm>
-        <DigestType>1</DigestType>
-        <Digest>a3cf809dbdbc835716ba22bdc370d2efa50f21c7</Digest>
-    </KeyDigest>
-</TrustAnchor>
-~~~
+Note that this DS record set only has one record because the record that would have included
+the key tag 19036 is already invalid based on the validUntil attribute's value.
 
 # Root Zone Trust Anchor Retrieval {#retrieving}
 
@@ -418,8 +382,8 @@ retrieving the trust anchors trusts the CA that IANA uses for the
 "data.iana.org" web server, HTTPS SHOULD be used instead of HTTP in
 order to have assurance of data origin.
 
-A KeyDigest element can contain both a Digest and a PublicKey element.
-If the Digest element would not be a proper DS record for a DNSKEY record represented by the PublicKey element,
+A KeyDigest element can contain both a Digest and a publickeyinfo named pattern.
+If the Digest element would not be a proper DS record for a DNSKEY record represented by the publickeyinfo named pattern,
 relying parties MUST NOT use that KeyDigest as a trust anchor.
 
 
