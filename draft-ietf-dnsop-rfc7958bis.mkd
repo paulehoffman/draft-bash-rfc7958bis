@@ -325,6 +325,7 @@ a validFrom ttime in the past.
 </PublicKey>
 <Flags>257</Flags>
 </KeyDigest>
+</TrustAnchor>
 ~~~
 
 The DS record derived from this example would be:
