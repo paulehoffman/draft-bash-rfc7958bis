@@ -394,7 +394,7 @@ and as a self-issued certificate signing request; this was described in {{RFC795
 This document removes those methods because they relied on a trust model
 that mixed out-of-band trust of authentication keys with out-of-band trust of the DNSSEC root keys.
 Note, however, that cryptographic assurance for the contents of the trust anchor now
-comes from the web PKI or the IANA CA as described in {{trusting_anchors}}.
+comes from the web PKI or the ICANN CA as described in {{trusting_anchors}}.
 This cryptographic assurance is bolstered by informal comparisons made by users of the
 trust anchors, such as software vendors comparing the trust anchor files they are using.
 
