@@ -395,6 +395,10 @@ If the Digest element would not be a proper DS record for a DNSKEY record repres
 relying parties MUST NOT use that KeyDigest as a trust anchor.
 A relying party that wants to make such a comparison needs to marshall the elements of the DNSKEY record that became the DS record using the algorithm specified in Section 5.1.4 of {{RFC4034}}.
 
+Relying parties need to implement trust anchor matching carefully.
+A single trust anchor represented by a KeyDigest element can potentially change its Digest and KeyTag values between two versions of the trust anchor file, for example when the key is revoked or the flag value changes for some other reason.
+Relying parties which fail to take this property into account are at risk of using an incorrect set of trust anchors.
+
 
 # IANA Considerations
 
