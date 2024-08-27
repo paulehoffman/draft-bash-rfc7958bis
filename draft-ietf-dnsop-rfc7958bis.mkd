@@ -144,7 +144,6 @@ and optionally the keys from the DNSKEY records.
 This format and the semantics associated are described in
 the rest of this section.
 
-
 Note that the XML document can have XML comments.
 For example, IANA might use these comments to add pointers to important information on the IANA web site.
 XML comments are only used as human-readable commentary, not extensions to the grammar.
@@ -153,8 +152,8 @@ The XML document contains a set of hashes for the DNSKEY records that
 can be used to validate the root zone.  The hashes are consistent
 with the defined presentation format of a DS resource.
 
-The XML document also can contain the keys from the DNSKEY records.
-The keys are consistent with the defined presentation format of a DNSKEY resource.
+The XML document also can contain the keys and flags from the DNSKEY records.
+The keys and flags are consistent with the defined presentation format of a DNSKEY resource.
 
 Note that the hashes are mandatory in the syntax, but the keys are optional.
 
