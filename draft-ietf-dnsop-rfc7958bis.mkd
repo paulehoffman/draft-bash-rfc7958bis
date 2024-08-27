@@ -359,6 +359,7 @@ order to have assurance of data origin.
 A KeyDigest element can contain both a Digest and a publickeyinfo named pattern.
 If the Digest element would not be a proper DS record for a DNSKEY record represented by the publickeyinfo named pattern,
 relying parties MUST NOT use that KeyDigest as a trust anchor.
+A relying party that wants to make such a comparison needs to marshall the elements of the DNSKEY record that became the DS record using the algorithm specified in Section 5.1.4 of {{RFC4034}}.
 
 
 ## Changes in the Trust Model for Distribution
