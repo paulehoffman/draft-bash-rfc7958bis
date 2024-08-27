@@ -109,7 +109,7 @@ complement to, not a substitute for, the automated DNSSEC trust
 anchor update protocol described in {{RFC5011}}.  That protocol allows
 for secure in-band succession of trust anchors when trust has already
 been established.  This document describes one way to establish an
-initial trust anchor that can be used by RFC 5011.
+initial trust anchor that can be used by {{RFC5011}}.
 
 This document obsoletes {{RFC7958}}.
 
@@ -405,7 +405,7 @@ can be found at <https://www.iana.org/dnssec/procedures>.
 
 --- back
 
-## Changes from RFC 7958
+# Changes from RFC 7958
 
 This version of the document includes the following changes:
 
