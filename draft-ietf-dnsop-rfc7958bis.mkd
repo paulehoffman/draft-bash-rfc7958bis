@@ -425,7 +425,7 @@ This version of the document includes the following changes:
 - There is a significant technical change from erratum 5932 &lt;https://www.rfc-editor.org/errata/eid5932&gt;.
 This is in the seventh paragraph of {{xml_semantics}}.
 
-- Added the optional public key element.
+- Added the optional publickeyinfo named pattern with two mandatory elements, PublicKey and Flags.
 
 - Removed the certificates and certificate signing mechanisms.
 
