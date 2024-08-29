@@ -109,7 +109,7 @@ complement to, not a substitute for, the automated DNSSEC trust
 anchor update protocol described in {{RFC5011}}.  That protocol allows
 for secure in-band succession of trust anchors when trust has already
 been established.  This document describes one way to establish an
-initial trust anchor that can be used by RFC 5011.
+initial trust anchor that can be used by {{RFC5011}}.
 
 This document obsoletes {{RFC7958}}.
 
@@ -136,31 +136,6 @@ IANA into a Delegation Signer (DS) RR can do so.
 
 {::boilerplate bcp14-tagged}
 
-## Changes from RFC 7958
-
-This version of the document includes the following changes:
-
-- There is a significant technical change from erratum 5932 &lt;https://www.rfc-editor.org/errata/eid5932&gt;.
-This is in the seventh paragraph of {{xml_semantics}}.
-
-- Added the optional public key element.
-
-- Removed the certificates and certificate signing mechanisms.
-
-- Removed the detached OpenPGP signature mechanism.
-
-- The reference to the DNSSEC Practice Statement {{DPS}} was updated.
-
-- Say explicitly that the XML documents might have XML comments in them.
-
-- Clarified the use of the detached CMS signature.
-
-- Updated the IANA Considerations section to indicate requirements on IANA.
-
-- Simplified the description of using the validFrom and validUntil attributes.
-
-- There was a bit of editorial cleanup.
-
 # IANA DNSSEC Root Zone Trust Anchor Format and Semantics {#ta_formats}
 
 IANA publishes trust anchors for the root zone as an XML document that contains the hashes of the DNSKEY records
@@ -168,7 +143,6 @@ and optionally the keys from the DNSKEY records.
 
 This format and the semantics associated are described in
 the rest of this section.
-
 
 Note that the XML document can have XML comments.
 For example, IANA might use these comments to add pointers to important information on the IANA web site.
@@ -178,8 +152,8 @@ The XML document contains a set of hashes for the DNSKEY records that
 can be used to validate the root zone.  The hashes are consistent
 with the defined presentation format of a DS resource.
 
-The XML document also can contain the keys from the DNSKEY records.
-The keys are consistent with the defined presentation format of a DNSKEY resource.
+The XML document also can contain the keys and flags from the DNSKEY records.
+The keys and flags are consistent with the defined presentation format of a DNSKEY resource.
 
 Note that the hashes are mandatory in the syntax, but the keys are optional.
 
@@ -254,16 +228,6 @@ the `id` element in the TrustAnchor element described above.
 The `validFrom` and `validUntil` attributes in the KeyDigest element specify
 the range of times that the KeyDigest element can be used as a trust anchor.
 
-Note that the `validUntil` attribute of the KeyDigest element is optional.
-If the relying party is using a trust anchor that has a KeyDigest element
-that does not have a `validUntil` attribute, it can change to a trust anchor
-with a KeyDigest element that does have a `validUntil` attribute,
-as long as that trust anchor's `validUntil` attribute is in the future and the
-KeyTag, Algorithm, DigestType, and Digest elements of the KeyDigest are the same as the previous trust anchor.
-
-Relying parties SHOULD NOT use a KeyDigest outside of the time range given
-in the `validFrom` and `validUntil` attributes.
-
 The KeyTag element in the KeyDigest element contains the key tag for
 the DNSKEY record represented in this KeyDigest.
 
@@ -325,6 +289,15 @@ E06D44B80B8F1D39A95C0B0D7C65D08458E880409BBC683457104237C7F8EC8D
     </PublicKey>
     <Flags>257</Flags>
   </KeyDigest>
+  <!-- The following is called "KSK-2024" as a shorthand name -->
+  <KeyDigest id="Kmyv6jo" validFrom="2024-07-18T00:00:00+00:00">
+    <KeyTag>38696</KeyTag>
+    <Algorithm>8</Algorithm>
+    <DigestType>2</DigestType>
+    <Digest>
+683D2D0ACB8C9B712A1948B27F741219298D0A450D612C483AF444A4C0FB2B16
+    </Digest>
+  </KeyDigest>
 </TrustAnchor>
 ~~~
 
@@ -382,11 +355,6 @@ retrieving the trust anchors trusts the CA that IANA uses for the
 "data.iana.org" web server, HTTPS SHOULD be used instead of HTTP in
 order to have assurance of data origin.
 
-A KeyDigest element can contain both a Digest and a publickeyinfo named pattern.
-If the Digest element would not be a proper DS record for a DNSKEY record represented by the publickeyinfo named pattern,
-relying parties MUST NOT use that KeyDigest as a trust anchor.
-
-
 ## Changes in the Trust Model for Distribution
 
 IANA used to distribute the trust anchors as a self-signed PGP message
@@ -412,6 +380,36 @@ Some of the methods described (such as accessing over the web
 with or without verifying the signature on the file) have different security properties;
 users of the trust anchor file need to consider these when choosing whether to load the set of trust anchors.
 
+## Security Considerations for Relying Parties
+
+The body of this document does not specify any particular behavior for relying parties.
+In specific, it does not say how a relying party should treat the trust anchor file as a whole.
+However, some of the contents of the trust anchor file require particular attention for relying parties.
+
+### validUntil
+
+Note that the `validUntil` attribute of the KeyDigest element is optional.
+If the relying party is using a trust anchor that has a KeyDigest element
+that does not have a `validUntil` attribute, it can change to a trust anchor
+with a KeyDigest element that does have a `validUntil` attribute,
+as long as that trust anchor's `validUntil` attribute is in the future and the
+KeyTag, Algorithm, DigestType, and Digest elements of the KeyDigest are the same as the previous trust anchor.
+
+Relying parties SHOULD NOT use a KeyDigest outside of the time range given
+in the `validFrom` and `validUntil` attributes.
+
+### Comparison of Digest and a publickeyinfo
+
+A KeyDigest element can contain both a Digest and a publickeyinfo named pattern.
+If the Digest element would not be a proper DS record for a DNSKEY record represented by the publickeyinfo named pattern,
+relying parties MUST NOT use that KeyDigest as a trust anchor.
+A relying party that wants to make such a comparison needs to marshall the elements of the DNSKEY record that became the DS record using the algorithm specified in Section 5.1.4 of {{RFC4034}}.
+
+Relying parties need to implement trust anchor matching carefully.
+A single trust anchor represented by a KeyDigest element can potentially change its Digest and KeyTag values between two versions of the trust anchor file, for example when the key is revoked or the flag value changes for some other reason.
+Relying parties which fail to take this property into account are at risk of using an incorrect set of trust anchors.
+
+
 # IANA Considerations
 
 Each time IANA produces a new trust anchor,
@@ -428,7 +426,35 @@ More information about IANA's policies and procedures for how the cryptographic 
 (also known as "DNSSEC Practice Statements" or "DPSs")
 can be found at <https://www.iana.org/dnssec/procedures>.
 
+{{RFC9858}} defined id-mod-dns-resource-record, value 70, which was added to the the "SMI Security for PKIX Module Identifier" registry.
+This document no longer uses that identifier.
+
 --- back
+
+# Changes from RFC 7958
+
+This version of the document includes the following changes:
+
+- There is a significant technical change from erratum 5932 &lt;https://www.rfc-editor.org/errata/eid5932&gt;.
+This is in the seventh paragraph of {{xml_semantics}}.
+
+- Added the optional publickeyinfo named pattern with two mandatory elements, PublicKey and Flags.
+
+- Removed the certificates and certificate signing mechanisms.
+
+- Removed the detached OpenPGP signature mechanism.
+
+- The reference to the DNSSEC Practice Statement {{DPS}} was updated.
+
+- Say explicitly that the XML documents might have XML comments in them.
+
+- Clarified the use of the detached CMS signature.
+
+- Updated the IANA Considerations section to indicate requirements on IANA.
+
+- Simplified the description of using the validFrom and validUntil attributes.
+
+- There was a bit of editorial cleanup.
 
 # Historical Note
 
