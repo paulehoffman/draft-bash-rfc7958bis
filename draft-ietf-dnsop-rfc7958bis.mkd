@@ -426,7 +426,7 @@ More information about IANA's policies and procedures for how the cryptographic 
 (also known as "DNSSEC Practice Statements" or "DPSs")
 can be found at <https://www.iana.org/dnssec/procedures>.
 
-{{RFC9858}} defined id-mod-dns-resource-record, value 70, which was added to the the "SMI Security for PKIX Module Identifier" registry.
+{{RFC7958}} defined id-mod-dns-resource-record, value 70, which was added to the the "SMI Security for PKIX Module Identifier" registry.
 This document no longer uses that identifier.
 
 --- back
