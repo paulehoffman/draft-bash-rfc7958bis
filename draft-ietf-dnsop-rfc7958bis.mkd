@@ -477,6 +477,8 @@ This is in the seventh paragraph of {{xml_semantics}}.
 
 - Simplified the description of using the validFrom and validUntil attributes.
 
+- Added new security considerations.
+
 - There was a bit of editorial cleanup.
 
 # Historical Note
