@@ -310,7 +310,7 @@ DS records derived from this example afte the KeyDigest with id of "Kmyv6jo" wou
    683D2D0ACB8C9B712A1948B27F741219298D0A450D612C483AF444A4C0FB2B16
 ~~~
 
-Note that this DS record set only has one record because the record that would have included
+Note that this DS record set only has two records because the other record that would have included
 the key tag 19036 is already invalid based on the validUntil attribute's value.
 
 # Root Zone Trust Anchor Retrieval {#retrieving}
