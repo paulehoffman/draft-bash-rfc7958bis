@@ -301,11 +301,13 @@ E06D44B80B8F1D39A95C0B0D7C65D08458E880409BBC683457104237C7F8EC8D
 </TrustAnchor>
 ~~~
 
-The DS record derived from this example would be:
+DS records derived from this example afte the KeyDigest with id of "Kmyv6jo" would be:
 
 ~~~Zone
 . IN DS 20326 8 2
    E06D44B80B8F1D39A95C0B0D7C65D08458E880409BBC683457104237C7F8EC8D
+. IN DS 38696 8 2
+   683D2D0ACB8C9B712A1948B27F741219298D0A450D612C483AF444A4C0FB2B16
 ~~~
 
 Note that this DS record set only has one record because the record that would have included
