@@ -301,7 +301,7 @@ E06D44B80B8F1D39A95C0B0D7C65D08458E880409BBC683457104237C7F8EC8D
 </TrustAnchor>
 ~~~
 
-DS records derived from this example afte the KeyDigest with id of "Kmyv6jo" would be:
+The DS RRset derived from this example would be:
 
 ~~~Zone
 . IN DS 20326 8 2
@@ -310,8 +310,25 @@ DS records derived from this example afte the KeyDigest with id of "Kmyv6jo" wou
    683D2D0ACB8C9B712A1948B27F741219298D0A450D612C483AF444A4C0FB2B16
 ~~~
 
-Note that this DS record set only has two records because the other record that would have included
-the key tag 19036 is already invalid based on the validUntil attribute's value.
+Note that this DS record set only has two records.
+The potential third record, the one that would have included the key tag 19036, is already invalid based on the validUntil attribute's value and is thus not part of the trust anchor set.
+
+The DNSKEY RRset derived from this example would be:
+
+~~~Zone
+. IN DNSKEY 257 3 8
+  AwEAAaz/tAm8yTn4Mfeh5eyI96WSVexTBAvkMgJzkKTOiW1vkIbzxeF3
+  +/4RgWOq7HrxRixHlFlExOLAJr5emLvN7SWXgnLh4+B5xQlNVz8Og8kv
+  ArMtNROxVQuCaSnIDdD5LKyWbRd2n9WGe2R8PzgCmr3EgVLrjyBxWezF
+  0jLHwVN8efS3rCj/EWgvIWgb9tarpVUDK/b58Da+sqqls3eNbuv7pr+e
+  oZG+SrDK6nWeL3c6H5Apxz7LjVc1uTIdsIXxuOLYA4/ilBmSVIzuDWfd
+  RUfhHdY6+cn8HFRm+2hM8AnXGXws9555KrUB5qihylGa8subX2Nn6UwN
+  R1AkUTV74bU=
+~~~
+
+Note that this DNSKEY record set only has one record.
+One potential second record, the one that would have been based on the key tag 19036, is already invalid based on the validUntil attribute's value and is thus not part of the trust anchor set.
+The other potential second record, the one that would have been based on the key tag 38696, does not contain the optional publickeyinfo element and therefore the DNSKEY record for it cannot be calculated.
 
 # Root Zone Trust Anchor Retrieval {#retrieving}
 
