@@ -328,7 +328,7 @@ The DNSKEY RRset derived from this example would be:
 
 Note that this DNSKEY record set only has one record.
 One potential second record, the one that would have been based on the key tag 19036, is already invalid based on the validUntil attribute's value and is thus not part of the trust anchor set.
-The other potential second record, the one that would have been based on the key tag 38696, does not contain the optional publickeyinfo element and therefore the DNSKEY record for it cannot be calculated.
+The other potential second record, the one that would have been based on the key tag 38696, does not contain the optional publickeyinfo named pattern and therefore the DNSKEY record for it cannot be calculated.
 
 # Root Zone Trust Anchor Retrieval {#retrieving}
 
@@ -428,6 +428,10 @@ Relying parties need to implement trust anchor matching carefully.
 A single trust anchor represented by a KeyDigest element can potentially change its Digest and KeyTag values between two versions of the trust anchor file, for example when the key is revoked or the flag value changes for some other reason.
 Relying parties which fail to take this property into account are at risk of using an incorrect set of trust anchors.
 
+### Different Outputs from Processing the Trust Anchor File
+
+Relying parties that require the optional publickeyinfo named pattern to create trust anchors will store fewer trust anhcors than those that only require a Digest element.
+Thus, two systems processing the same trust anchor file can end up with a different set of trust anchors.
 
 # IANA Considerations
 
